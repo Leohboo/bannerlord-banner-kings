@@ -111,11 +111,19 @@ namespace BannerKings.Models.Vanilla
             }
             if (party.LeaderHero != null && party.LeaderHero.GetPerkValue(DefaultPerks.Roguery.Promises) && num > 0)
             {
-                float value = (float)num / (float)this.NumberOfMenOnMapToEatOneFood * DefaultPerks.Roguery.Promises.PrimaryBonus;
+                float value = (float)num / (float)this.NumberOfMenOnMapToEatOneFood * DefaultPerks.Roguery.Promises.PrimaryBonus * -1;
                 result.Add(value, DefaultPerks.Roguery.Promises.Name, null);
             }
             PerkHelper.AddPerkBonusForParty(DefaultPerks.Athletics.Spartan, party, false, ref result);
-            PerkHelper.AddPerkBonusForParty(DefaultPerks.Steward.WarriorsDiet, party, true, ref result);
+            
+            //PerkHelper.AddPerkBonusForParty(DefaultPerks.Steward.WarriorsDiet, party, true, ref result);
+            
+            if (party.LeaderHero != null && party.LeaderHero.GetPerkValue(DefaultPerks.Steward.WarriorsDiet))
+            {
+                float value = (float)(party.MemberRoster.Count + party.PrisonRoster.Count) / (float)this.NumberOfMenOnMapToEatOneFood * DefaultPerks.Steward.WarriorsDiet.PrimaryBonus * -1;
+                result.Add(value, DefaultPerks.Steward.WarriorsDiet.Name, null);
+            }
+            
             if (party.EffectiveQuartermaster != null)
             {
                 PerkHelper.AddEpicPerkBonusForCharacter(DefaultPerks.Steward.PriceOfLoyalty, party.EffectiveQuartermaster.CharacterObject, DefaultSkills.Steward, true, ref result, 250);
