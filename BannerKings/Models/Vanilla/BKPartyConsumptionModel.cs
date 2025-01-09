@@ -120,7 +120,7 @@ namespace BannerKings.Models.Vanilla
             
             if (party.LeaderHero != null && party.LeaderHero.GetPerkValue(DefaultPerks.Steward.WarriorsDiet))
             {
-                float value = (float)(party.MemberRoster.Count + party.PrisonRoster.Count) / (float)this.NumberOfMenOnMapToEatOneFood * DefaultPerks.Steward.WarriorsDiet.PrimaryBonus * -1;
+                float value = (float)(party.MemberRoster.TotalManCount) / (float)this.NumberOfMenOnMapToEatOneFood * DefaultPerks.Steward.WarriorsDiet.PrimaryBonus * -1;
                 result.Add(value, DefaultPerks.Steward.WarriorsDiet.Name, null);
             }
             
